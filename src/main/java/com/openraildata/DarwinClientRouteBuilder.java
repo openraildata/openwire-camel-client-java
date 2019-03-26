@@ -3,6 +3,8 @@ package com.openraildata;
 import org.apache.activemq.camel.component.ActiveMQComponent;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -48,18 +50,31 @@ public class DarwinClientRouteBuilder extends RouteBuilder {
     private final DarwinMessageHandler darwinMessageHandler;
     private final String clientId;
 
+		//mcf
+		private static final Logger logger = LoggerFactory.getLogger(DarwinClientRouteBuilder.class);
 
     public DarwinClientRouteBuilder(CamelContext camelContext,
                                     DarwinMessageHandler darwinMessageHandler) throws UnknownHostException {
         this.camelContext = camelContext;
         this.darwinMessageHandler = darwinMessageHandler;
         this.clientId = username + "-" + InetAddress.getLocalHost().getCanonicalHostName();
+
+        //mcf
+        logger.info("this.clientId:" + this.clientId);
+
     }
 
+		//mcf
     @Override
-    public void configure() {
+    //public void configure() {
+    public void configure() throws UnknownHostException {
 
-        ActiveMQComponent amqComponent = new ActiveMQComponent();
+				//mcf
+				String clientId = username + "-" + InetAddress.getLocalHost().getCanonicalHostName();       
+				logger.info("username:" + username);
+				logger.info("clientId:" + clientId);
+        
+				ActiveMQComponent amqComponent = new ActiveMQComponent();
         amqComponent.setUsername(username);
         amqComponent.setPassword(password);
         amqComponent.setClientId(clientId);
