@@ -48,31 +48,27 @@ public class DarwinClientRouteBuilder extends RouteBuilder {
 
     private final CamelContext camelContext;
     private final DarwinMessageHandler darwinMessageHandler;
-    private final String clientId;
+    //private final String clientId;
 
-		//mcf
 		private static final Logger logger = LoggerFactory.getLogger(DarwinClientRouteBuilder.class);
 
     public DarwinClientRouteBuilder(CamelContext camelContext,
                                     DarwinMessageHandler darwinMessageHandler) throws UnknownHostException {
         this.camelContext = camelContext;
         this.darwinMessageHandler = darwinMessageHandler;
-        this.clientId = username + "-" + InetAddress.getLocalHost().getCanonicalHostName();
+        //this.clientId = username + "-" + InetAddress.getLocalHost().getCanonicalHostName();
 
-        //mcf
-        logger.info("this.clientId:" + this.clientId);
+        //logger.info("this.clientId:" + this.clientId);
 
     }
 
-		//mcf
     @Override
     //public void configure() {
     public void configure() throws UnknownHostException {
 
-				//mcf
 				String clientId = username + "-" + InetAddress.getLocalHost().getCanonicalHostName();       
-				logger.info("username:" + username);
-				logger.info("clientId:" + clientId);
+				//logger.info("username:" + username);
+				//logger.info("clientId:" + clientId);
         
 				ActiveMQComponent amqComponent = new ActiveMQComponent();
         amqComponent.setUsername(username);
