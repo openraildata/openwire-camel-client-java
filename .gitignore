@@ -1,2 +1,6 @@
+# app
 target/
 src/main/resources/application.properties
+
+# misc
+*.swp
