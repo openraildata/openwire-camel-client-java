@@ -29,9 +29,6 @@ import java.net.UnknownHostException;
 @Component
 public class DarwinClientRouteBuilder extends RouteBuilder {
 
-    @Value("${darwinv16.username}")
-    private String username;
-
     @Value("${darwinv16.password}")
     private String password;
 
@@ -46,13 +43,16 @@ public class DarwinClientRouteBuilder extends RouteBuilder {
 
     private final CamelContext camelContext;
     private final DarwinMessageHandler darwinMessageHandler;
+    private String username;
     private final String clientId;
 
 
     public DarwinClientRouteBuilder(CamelContext camelContext,
-                                    DarwinMessageHandler darwinMessageHandler) throws UnknownHostException {
+                                    DarwinMessageHandler darwinMessageHandler,
+                                    @Value("${darwinv16.username}") String username) throws UnknownHostException {
         this.camelContext = camelContext;
         this.darwinMessageHandler = darwinMessageHandler;
+        this.username = username;
         this.clientId = username + "-" + InetAddress.getLocalHost().getCanonicalHostName();
     }
 
@@ -75,3 +75,4 @@ public class DarwinClientRouteBuilder extends RouteBuilder {
     }
 
 }
+
