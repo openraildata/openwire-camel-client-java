@@ -14,7 +14,7 @@ import java.io.StringReader;
 
 /**
  * National Rail Open Data - Darwin v16 Client Demonstrator
- * Copyright (C)2019 OpenTrainTimes Ltd.
+ * Copyright (C)2019-2020 OpenTrainTimes Ltd.
  * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
