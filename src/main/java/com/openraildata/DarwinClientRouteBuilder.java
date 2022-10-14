@@ -1,13 +1,15 @@
 package com.openraildata;
 
-import org.apache.activemq.camel.component.ActiveMQComponent;
+import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.activemq.ActiveMQComponent;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.List;
 
 /**
  * National Rail Open Data - Darwin v16 Client Demonstrator
@@ -35,6 +37,9 @@ public class DarwinClientRouteBuilder extends RouteBuilder {
     @Value("${darwinv16.password}")
     private String password;
 
+    @Value("${darwinv16.accountname}")
+    private String accountName;
+
     @Value("${darwinv16.hostname}")
     private String hostname;
 
@@ -59,17 +64,23 @@ public class DarwinClientRouteBuilder extends RouteBuilder {
     @Override
     public void configure() {
 
-        ActiveMQComponent amqComponent = new ActiveMQComponent();
+        var amqComponent = new ActiveMQComponent();
         amqComponent.setUsername(username);
         amqComponent.setPassword(password);
         amqComponent.setClientId(clientId);
-        amqComponent.setBrokerURL("tcp://" + hostname + ":61616/?jms.watchTopicAdvisories=false");
+
+        var cf = new ActiveMQConnectionFactory();
+        cf.setTrustedPackages(List.of("com.thalesgroup.rtti"));
+        cf.setBrokerURL("tcp://" + hostname + ":61616?jms.watchTopicAdvisories=false");
+        amqComponent.setConnectionFactory(cf);
 
         camelContext.addComponent("activemq", amqComponent);
 
-        from("activemq:topic:" + feedTopic + "?durableSubscriptionName=" + username)
+        from("activemq:topic:" + feedTopic + "?clientId=" + this.clientId + "&durableSubscriptionName=" + username + "-sub")
+                .id("darwin-v16")
+                .description("Darwin Push Port data v16")
                 .unmarshal()
-                .gzip()
+                .gzipDeflater()
                 .process(darwinMessageHandler);
 
     }

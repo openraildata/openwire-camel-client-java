@@ -1,15 +1,15 @@
 package com.openraildata;
 
 import com.thalesgroup.rtti.pushport.v16.Pport;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Unmarshaller;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 import java.io.StringReader;
 
 /**
@@ -44,10 +44,10 @@ public class DarwinMessageHandler implements Processor {
     @Override
     public void process(Exchange exchange) throws Exception {
 
-        String messageBody = exchange.getIn().getBody(String.class);
+        var messageBody = exchange.getIn().getBody(String.class);
 
-        StringReader msgString = new StringReader(messageBody);
-        Pport obj = (Pport) unmarshaller.unmarshal(msgString);
+        var msgString = new StringReader(messageBody);
+        var obj = (Pport) unmarshaller.unmarshal(msgString);
 
         logger.info("Received a Push Port message from {}", obj.getTs());
         logger.info("Raw XML is:\n{}", messageBody);
