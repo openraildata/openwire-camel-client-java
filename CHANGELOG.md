@@ -1,3 +1,9 @@
+v1.3
+====
+
+ * Update to Spring Boot 2.7.4
+ * Update to Camel 3.18.2
+
 v1.2
 ====
 

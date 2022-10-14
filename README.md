@@ -12,8 +12,11 @@ to the 'Darwin' feed.
 Configuration
 -------------
 
-Edit `src/main/resources/application.properties`, uncomment and set the username,
-password and hostname keys to the values shown on the 'My Feeds' page.
+Edit `src/main/resources/application.properties`, uncomment and set the following fields:
+
+* **account name** is the email address used to log in to the portal
+* **username** and **password** are listed on the 'My Feeds' page of the portal - the username will start with 'DARWIN'
+* **hostname** is the messaging host listed on the 'My Feeds' page of the portal
 
 To customise the JMS Client ID sent to the ActiveMQ server, change the definition
 of `this.clientId` in the constructor method for `DarwinClientRouteBuilder`. You
