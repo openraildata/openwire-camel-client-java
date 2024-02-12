@@ -1,3 +1,10 @@
+v1.4
+====
+
+ * Update Java target from v11 to v21
+ * Update Spring Boot v2.7.4 -> v3.2.2
+ * Update JAXB and Jakarta dependencies
+
 v1.3
 ====
 
